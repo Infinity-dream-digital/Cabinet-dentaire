@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tableau de bord — Cabinet Dentaire Saint Jean</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="dash-body">
+  <header class="dash-header">
+    <div class="dash-header-inner">
+      <div class="logo">
+        <span class="logo-icon">🦷</span>
+        <span class="logo-text"><strong>Saint Jean</strong><small>Administration</small></span>
+      </div>
+      <button class="dash-logout" onclick="logout()">Déconnexion</button>
+    </div>
+  </header>
+
+  <main class="dash-main">
+    <h1 class="dash-title">Tableau de bord</h1>
+
+    <div class="dash-stats">
+      <div class="dash-stat"><strong id="statToday">0</strong><span>Rendez-vous aujourd'hui</span></div>
+      <div class="dash-stat"><strong id="statWeek">0</strong><span>Cette semaine</span></div>
+      <div class="dash-stat"><strong id="statTotal">0</strong><span>Total des RDV</span></div>
+    </div>
+
+    <div class="dash-filters">
+      <input type="text" id="searchInput" placeholder="Rechercher par nom ou ticket..." oninput="applyFilters()" />
+      <select id="dateFilter" onchange="applyFilters()">
+        <option value="">Toutes les dates</option>
+      </select>
+      <button class="dash-export" onclick="exportCSV()">Exporter CSV ↓</button>
+    </div>
+
+    <div class="dash-table-wrap">
+      <div class="dash-loading" id="loadingMsg">Chargement des rendez-vous...</div>
+      <table class="dash-table" id="rdvTable" style="display:none">
+        <thead>
+          <tr>
+            <th>Ticket</th>
+            <th>Nom</th>
+            <th>Téléphone</th>
+            <th>Motif</th>
+            <th>Date</th>
+            <th>Heure</th>
+            <th>Statut</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="rdvBody"></tbody>
+      </table>
+      <div class="dash-empty" id="emptyMsg" style="display:none">Aucun rendez-vous trouvé.</div>
+    </div>
+  </main>
+
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+
+    const SUPABASE_URL = 'https://zwybiqrmqkiarbelgmzy.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp3eWJpcXJtcWtpYXJiZWxnbXp5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODgxMzU0MzEsImV4cCI6MjEwMzcxMTQzMX0.k25NLgEtYQt-lgzNHwFC2dBc6Ey2c-8VTPzQQe2c6rc';
+
+    const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    // --- AUTH CHECK ---
+    if (sessionStorage.getItem('admin') !== 'true') {
+      window.location.href = 'admin.html';
+    }
+
+    window.logout = () => {
+      sessionStorage.removeItem('admin');
+      window.location.href = 'admin.html';
+    };
+
+    let allRdv = [];
+    let filteredRdv = [];
+
+    // --- REAL-TIME SUBSCRIPTION ---
+    supabase
+      .channel('rendezvous_changes')
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'rendezvous' }, () => {
+        loadRdv();
+      })
+      .subscribe();
+
+    async function loadRdv() {
+      const { data, error } = await supabase
+        .from('rendezvous')
+        .select('*')
+        .order('date', { ascending: true })
+        .order('heure', { ascending: true });
+
+      if (error) {
+        document.getElementById('loadingMsg').textContent = 'Erreur de chargement. Vérifiez la connexion.';
+        return;
+      }
+
+      allRdv = data || [];
+      populateDateFilter();
+      applyFilters();
+    }
+
+    function populateDateFilter() {
+      const select = document.getElementById('dateFilter');
+      const dates = [...new Set(allRdv.map((r) => r.date))].sort();
+      const currentVal = select.value;
+      select.innerHTML = '<option value="">Toutes les dates</option>';
+      dates.forEach((d) => {
+        const opt = document.createElement('option');
+        opt.value = d;
+        opt.textContent = new Date(d + 'T00:00:00').toLocaleDateString('fr-FR');
+        select.appendChild(opt);
+      });
+      select.value = currentVal;
+    }
+
+    window.applyFilters = () => {
+      const search = document.getElementById('searchInput').value.toLowerCase().trim();
+      const dateF = document.getElementById('dateFilter').value;
+
+      filteredRdv = allRdv.filter((r) => {
+        const matchSearch = !search ||
+          r.nom.toLowerCase().includes(search) ||
+          r.ticket_id.toLowerCase().includes(search);
+        const matchDate = !dateF || r.date === dateF;
+        return matchSearch && matchDate;
+      });
+
+      renderTable();
+      updateStats();
+    };
+
+    function updateStats() {
+      const today = new Date().toISOString().slice(0, 10);
+      const now = new Date();
+      const weekStart = new Date(now);
+      weekStart.setDate(now.getDate() - now.getDay() + 1);
+      const weekStartStr = weekStart.toISOString().slice(0, 10);
+
+      document.getElementById('statToday').textContent =
+        allRdv.filter((r) => r.date === today && r.statut !== 'Annulé').length;
+      document.getElementById('statWeek').textContent =
+        allRdv.filter((r) => r.date >= weekStartStr && r.statut !== 'Annulé').length;
+      document.getElementById('statTotal').textContent = allRdv.length;
+    }
+
+    function renderTable() {
+      const body = document.getElementById('rdvBody');
+      const loading = document.getElementById('loadingMsg');
+      const empty = document.getElementById('emptyMsg');
+      const table = document.getElementById('rdvTable');
+
+      loading.style.display = 'none';
+
+      if (filteredRdv.length === 0) {
+        table.style.display = 'none';
+        empty.style.display = 'block';
+        return;
+      }
+
+      table.style.display = 'table';
+      empty.style.display = 'none';
+
+      body.innerHTML = filteredRdv.map((r) => {
+        const statusClass = r.statut === 'Confirmé' ? 'status-confirmed'
+          : r.statut === 'Terminé' ? 'status-terminated'
+          : 'status-cancelled';
+        return `
+          <tr>
+            <td><strong>${r.ticket_id}</strong></td>
+            <td>${r.nom}</td>
+            <td>${r.telephone}</td>
+            <td>${r.motif}</td>
+            <td>${new Date(r.date + 'T00:00:00').toLocaleDateString('fr-FR')}</td>
+            <td>${r.heure}</td>
+            <td>
+              <select class="status-select ${statusClass}" onchange="updateStatus('${r.id}', this.value)">
+                <option value="Confirmé" ${r.statut === 'Confirmé' ? 'selected' : ''}>Confirmé</option>
+                <option value="Terminé" ${r.statut === 'Terminé' ? 'selected' : ''}>Terminé</option>
+                <option value="Annulé" ${r.statut === 'Annulé' ? 'selected' : ''}>Annulé</option>
+              </select>
+            </td>
+            <td>
+              <button class="dash-action" onclick="viewTicket('${r.ticket_id}', '${r.nom}', '${r.motif}', '${r.date}', '${r.heure}')">Voir ticket</button>
+              <button class="dash-action danger" onclick="deleteRdv('${r.id}')">Supprimer</button>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    window.updateStatus = async (id, statut) => {
+      const { error } = await supabase
+        .from('rendezvous')
+        .update({ statut })
+        .eq('id', id);
+      if (error) {
+        alert('Erreur lors de la mise à jour du statut.');
+      }
+      loadRdv();
+    };
+
+    window.deleteRdv = async (id) => {
+      if (!confirm('Supprimer définitivement ce rendez-vous ?')) return;
+      const { error } = await supabase
+        .from('rendezvous')
+        .delete()
+        .eq('id', id);
+      if (error) {
+        alert('Erreur lors de la suppression.');
+      }
+      loadRdv();
+    };
+
+    window.viewTicket = (ticketId, nom, motif, date, heure) => {
+      const qrData = `Cabinet Saint Jean - RDV ${ticketId} - ${nom} - ${date} ${heure} - Cocody Abidjan`;
+      const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(qrData)}`;
+      const dateFmt = new Date(date + 'T00:00:00').toLocaleDateString('fr-FR', {
+        weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',
+      });
+
+      const win = window.open('', '_blank');
+      win.document.write(`
+        <html>
+        <head>
+          <title>Ticket ${ticketId}</title>
+          <style>
+            body { font-family: Arial, sans-serif; padding: 40px; background: #f5f8fa; display: flex; justify-content: center; }
+            .ticket-card { max-width: 480px; border: 2px solid #2EC4B6; border-radius: 20px; overflow: hidden; }
+            .ticket-header { background: #0E76A8; color: #fff; padding: 20px 28px; display: flex; justify-content: space-between; align-items: center; }
+            .ticket-body { padding: 28px; text-align: center; background: #fff; }
+            .ticket-label { font-size: 13px; color: #6B7B95; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 8px; }
+            .ticket-id { font-size: 32px; font-weight: 800; color: #0E76A8; margin-bottom: 24px; }
+            .ticket-row { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #E2E8F0; font-size: 14px; }
+            .ticket-row span { color: #6B7B95; }
+            .ticket-row strong { color: #1A2B4C; }
+            .ticket-qr { display: flex; justify-content: center; margin: 20px 0; }
+            .ticket-instruction { font-size: 13px; color: #6B7B95; }
+          </style>
+        </head>
+        <body>
+          <div class="ticket-card">
+            <div class="ticket-header">
+              <div style="font-size:18px;font-weight:700">🦷 Saint Jean</div>
+              <div style="display:flex;align-items:center;gap:6px;font-size:14px;font-weight:600">
+                <span style="width:22px;height:22px;background:#2EC4B6;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px">✓</span>
+                Confirmé
+              </div>
+            </div>
+            <div class="ticket-body">
+              <p class="ticket-label">Votre numéro de ticket</p>
+              <h2 class="ticket-id">${ticketId}</h2>
+              <div style="text-align:left;margin-bottom:24px">
+                <div class="ticket-row"><span>Patient</span><strong>${nom}</strong></div>
+                <div class="ticket-row"><span>Motif</span><strong>${motif}</strong></div>
+                <div class="ticket-row"><span>Date</span><strong>${dateFmt}</strong></div>
+                <div class="ticket-row"><span>Heure</span><strong>${heure}</strong></div>
+                <div class="ticket-row"><span>Adresse</span><strong>Cocody, Abidjan</strong></div>
+              </div>
+              <div class="ticket-qr"><img src="${qrUrl}" alt="QR Code" /></div>
+              <p class="ticket-instruction">Présentez ce ticket à l'accueil du cabinet.</p>
+            </div>
+          </div>
+        </body>
+        </html>
+      `);
+      win.document.close();
+      setTimeout(() => win.print(), 500);
+    };
+
+    window.exportCSV = () => {
+      const headers = ['Ticket', 'Nom', 'Téléphone', 'Email', 'Motif', 'Date', 'Heure', 'Statut', 'Créé le'];
+      const rows = filteredRdv.map((r) => [
+        r.ticket_id, r.nom, r.telephone, r.email || '', r.motif, r.date, r.heure, r.statut,
+        r.created_at ? new Date(r.created_at).toISOString() : '',
+      ]);
+      const csv = [headers, ...rows]
+        .map((row) => row.map((cell) => `"${String(cell).replace(/"/g, '""')}"`).join(','))
+        .join('\n');
+      const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8' });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = 'rendezvous-saint-jean.csv';
+      link.click();
+      URL.revokeObjectURL(link.href);
+    };
+
+    loadRdv();
+  </script>
+</body>
+</html>

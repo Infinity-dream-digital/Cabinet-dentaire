@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cabinet Dentaire Saint Jean — Cocody Abidjan</title>
+  <meta name="description" content="Cabinet dentaire moderne à Cocody, Abidjan. Détartrage, blanchiment, soins sans douleur. Prenez rendez-vous en ligne et recevez votre ticket de confirmation." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+  
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="header" id="header">
+    <div class="container header-inner">
+      <a href="#hero" class="logo">
+        <span class="logo-icon">🦷</span>
+        <span class="logo-text"><strong>Saint Jean</strong><small>Dentaire</small></span>
+      </a>
+      <nav class="nav" id="nav">
+        <a href="#services">Services</a>
+        <a href="#pourquoi">Pourquoi nous</a>
+        <a href="#medecin">Notre médecin</a>
+        <a href="#avis">Avis</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+      <button class="btn btn-cta" onclick="openBookingModal()">Prendre RDV</button>
+      <button class="burger" id="burger" aria-label="Menu">☰</button>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero" id="hero">
+    <div class="container hero-inner">
+      <div class="hero-content">
+        <p class="hero-badge">🦷 Cabinet Dentaire Saint Jean · Cocody, Abidjan</p>
+        <h1>Retrouvez un sourire éclatant<br>et <span class="text-accent">sans douleur</span> à Cocody</h1>
+        <p class="hero-sub">Soins dentaires modernes, technologie numérique de pointe et devis gratuit. Votre santé bucco-dentaire entre des mains expertes.</p>
+        <div class="hero-actions">
+          <button class="btn btn-cta btn-lg" onclick="openBookingModal()">Prendre rendez-vous →</button>
+          <a href="#services" class="btn btn-outline btn-lg">Voir nos soins</a>
+        </div>
+        <div class="hero-stats">
+          <div><strong>5000+</strong><span>Patients satisfaits</span></div>
+          <div><strong>4.8/5</strong><span>Google Reviews</span></div>
+          <div><strong>7j/7</strong><span>Urgences dentaires</span></div>
+        </div>
+      </div>
+      <div class="hero-image">
+        <img src="https://images.pexels.com/photos/3845627/pexels-photo-3845627.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Patiente souriante au cabinet dentaire" />
+        <div class="hero-card">
+          <div class="hero-card-icon">✓</div>
+          <div><strong>Soins sans douleur</strong><span>Technologie numérique moderne</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRUST BAR -->
+  <section class="trust-bar">
+    <div class="container trust-inner">
+      <div class="trust-item"><span class="trust-icon">★★★★★</span><div><strong>4.8/5</strong><small>Google Reviews</small></div></div>
+      <div class="trust-item"><span class="trust-icon">👥</span><div><strong>5000+</strong><small>Patients traités</small></div></div>
+      <div class="trust-item"><span class="trust-icon">⚡</span><div><strong>Urgences</strong><small>7j/7 sur appel</small></div></div>
+      <div class="trust-item"><span class="trust-icon">🛡️</span><div><strong>Hygiène</strong><small>Normes internationales</small></div></div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section class="section section-alt" id="services">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow">Nos services</p>
+        <h2>Des soins complets<br>pour toute la famille</h2>
+        <p>Des tarifs transparents et accessibles. Devis gratuit sur demande.</p>
+      </div>
+      <div class="services-grid">
+        <div class="service-card">
+          <div class="service-icon">🦷</div>
+          <h3>Détartrage</h3>
+          <p>Nettoyage professionnel complet pour des dents saines et un sourire éclatant.</p>
+          <div class="service-price">20 000 F</div>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">✨</div>
+          <h3>Blanchiment</h3>
+          <p>Retrouvez un sourire éclatant et blanc grâce à notre traitement professionnel.</p>
+          <div class="service-price">Sur devis</div>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">🔧</div>
+          <h3>Carie / Plombage</h3>
+          <p>Traitement des caries et plombages sans douleur avec matériaux de qualité.</p>
+          <div class="service-price">15 000 F</div>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">🦴</div>
+          <h3>Extraction</h3>
+          <p>Extraction dentaire en toute sécurité avec un suivi post-opératoire attentif.</p>
+          <div class="service-price">25 000 F</div>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">🦿</div>
+          <h3>Prothèse</h3>
+          <p>Prothèses dentaires sur mesure, fixes ou amovibles, pour retrouver le confort.</p>
+          <div class="service-price">Sur devis</div>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">🧒</div>
+          <h3>Pédiatrie</h3>
+          <p>Soins dentaires adaptés aux enfants dans un environnement bienveillant et rassurant.</p>
+          <div class="service-price">10 000 F</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- POURQUOI NOUS -->
+  <section class="section" id="pourquoi">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow">Pourquoi nous choisir</p>
+        <h2>Une expérience dentaire<br>différente</h2>
+      </div>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">🛡️</div>
+          <h3>Hygiène irréprochable</h3>
+          <p>Stérilisation aux normes internationales, matériel à usage unique, locaux désinfectés entre chaque patient.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">📱</div>
+          <h3>Numérique sans douleur</h3>
+          <p>Radiographie numérique, empreintes 3D et techniques modernes pour des soins précis et indolores.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">💳</div>
+          <h3>Paiement flexible</h3>
+          <p>Espèces, Mobile Money, virement. Devis gratuit et transparent avant tout traitement.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MEDECIN -->
+  <section class="section section-alt" id="medecin">
+    <div class="container medecin-inner">
+      <div class="medecin-image">
+        <img src="https://images.pexels.com/photos/5355892/pexels-photo-5355892.jpeg?auto=compress&cs=tinysrgb&w=700" alt="Dr. Jean Kouassi, chirurgien-dentiste" />
+      </div>
+      <div class="medecin-content">
+        <p class="eyebrow">Votre praticien</p>
+        <h2>Dr. Jean Kouassi</h2>
+        <p class="medecin-title">Chirurgien-Dentiste · Diplômé Université Félix Houphouët-Boigny</p>
+        <p class="medecin-bio">Avec plus de 15 ans d'expérience, le Dr. Kouassi allie expertise technique et approche humaine. Il forme une équipe dédiée à votre confort et à votre santé bucco-dentaire. Chaque patient reçoit une attention personnalisée, dans un cadre moderne et rassurant.</p>
+        <div class="medecin-credentials">
+          <div class="cred-item"><span>✓</span> Diplôme d'État en Chirurgie Dentaire</div>
+          <div class="cred-item"><span>✓</span> Formation continue en Europe</div>
+          <div class="cred-item"><span>✓</span> Membre de l'Ordre des Chirurgiens-Dentistes de Côte d'Ivoire</div>
+        </div>
+        <button class="btn btn-cta" onclick="openBookingModal()">Prendre RDV avec le Dr. Kouassi →</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- AVIS -->
+  <section class="section" id="avis">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow">Ils nous ont fait confiance</p>
+        <h2>Avis de nos patients</h2>
+      </div>
+      <div class="reviews-grid">
+        <div class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <p>« Un accueil chaleureux et des soins impeccables. J'avais peur du dentiste, mais au Cabinet Saint Jean tout s'est passé en douceur. Je recommande vivement. »</p>
+          <div class="review-author">
+            <div class="review-avatar">AK</div>
+            <div><strong>Aïcha K.</strong><small>Cocody, Abidjan</small></div>
+          </div>
+        </div>
+        <div class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <p>« Le détartage était rapide et sans douleur. Le cabinet est très propre et moderne. Le docteur prend le temps d'expliquer chaque étape. »</p>
+          <div class="review-author">
+            <div class="review-avatar">YT</div>
+            <div><strong>Yao T.</strong><small>II Plateaux, Abidjan</small></div>
+          </div>
+        </div>
+        <div class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <p>« Mon fils de 7 ans n'avait plus peur après sa première visite. L'équipe est très douce avec les enfants. Un grand merci ! »</p>
+          <div class="review-author">
+            <div class="review-avatar">MD</div>
+            <div><strong>Mariam D.</strong><small>Riviera, Abidjan</small></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section section-alt" id="faq">
+    <div class="container faq-inner">
+      <div class="section-head">
+        <p class="eyebrow">Questions fréquentes</p>
+        <h2>Vos questions,<br>nos réponses</h2>
+      </div>
+      <div class="faq-list">
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">Comment prendre rendez-vous ? <span class="faq-icon">+</span></button>
+          <div class="faq-a"><p>Cliquez sur le bouton « Prendre RDV », remplissez le formulaire en ligne et choisissez votre créneau. Vous recevrez immédiatement un ticket de confirmation à présenter à l'accueil.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">Acceptez-vous les urgences ? <span class="faq-icon">+</span></button>
+          <div class="faq-a"><p>Oui, nous acceptons les urgences dentaires 7j/7. Appelez-nous ou prenez un rendez-vous en ligne en sélectionnant le motif « Douleur / Urgence ».</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">Quels sont les moyens de paiement ? <span class="faq-icon">+</span></button>
+          <div class="faq-a"><p>Nous acceptons les espèces, Mobile Money (Orange, MTN, Moov), Wave et les virements bancaires. Un devis gratuit vous est remis avant tout traitement.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">Les soins sont-ils douloureux ? <span class="faq-icon">+</span></button>
+          <div class="faq-a"><p>Grâce à notre équipement numérique moderne et à nos techniques de pointe, la grande majorité des soins se font sans douleur. Votre confort est notre priorité.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">Consulter sans rendez-vous est-il possible ? <span class="faq-icon">+</span></button>
+          <div class="faq-a"><p>Nous recommandons fortement de prendre rendez-vous pour éviter l'attente. Les urgences sont toutefois prioritaires et accueillies sans RDV.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA BANNER -->
+  <section class="cta-banner">
+    <div class="container cta-inner">
+      <h2>Prêt à retrouver votre sourire ?</h2>
+      <p>Réservez votre rendez-vous en ligne en moins de 2 minutes.</p>
+      <button class="btn btn-cta btn-lg" onclick="openBookingModal()">Prendre rendez-vous maintenant →</button>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="footer-col">
+        <div class="logo footer-logo">
+          <span class="logo-icon">🦷</span>
+          <span class="logo-text"><strong>Saint Jean</strong><small>Dentaire</small></span>
+        </div>
+        <p class="footer-desc">Votre cabinet dentaire de confiance à Cocody, Abidjan. Des soins modernes, sans douleur, pour toute la famille.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Adresse</h4>
+        <p>Cocody, Abidjan<br>Côte d'Ivoire</p>
+        <h4 style="margin-top:20px">Téléphone</h4>
+        <p>+225 07 00 00 00 00</p>
+      </div>
+      <div class="footer-col">
+        <h4>Horaires</h4>
+        <p>Lun – Ven : 08h00 – 17h30<br>Samedi : 08h00 – 13h00<br>Dimanche : Urgences uniquement</p>
+      </div>
+      <div class="footer-col">
+        <h4>Navigation</h4>
+        <a href="#services">Services</a>
+        <a href="#pourquoi">Pourquoi nous</a>
+        <a href="#medecin">Notre médecin</a>
+        <a href="#avis">Avis</a>
+        <a href="#faq">FAQ</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="container">
+        <p id="footer-name" ondblclick="window.location.href='admin.html'">Cabinet Dentaire Saint Jean</p>
+        <p>© 2026 Cabinet Dentaire Saint Jean · Tous droits réservés</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- BOOKING MODAL -->
+  <div class="modal-overlay" id="bookingModal">
+    <div class="modal modal-booking">
+      <button class="modal-close" onclick="closeBookingModal()">×</button>
+      <div id="bookingFormWrap">
+        <p class="eyebrow">Réservation en ligne</p>
+        <h2 class="modal-title">Prendre rendez-vous</h2>
+        <p class="modal-sub">Remplissez le formulaire ci-dessous. Vous recevrez un ticket de confirmation immédiat.</p>
+        <form id="bookingForm" onsubmit="submitBooking(event)">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="bk-nom">Nom complet <span class="req">*</span></label>
+              <input type="text" id="bk-nom" required placeholder="Ex: Aïcha Koné" />
+            </div>
+            <div class="form-group">
+              <label for="bk-tel">Téléphone (+225) <span class="req">*</span></label>
+              <input type="tel" id="bk-tel" required placeholder="07 00 00 00 00" />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="bk-email">Email (optionnel)</label>
+              <input type="email" id="bk-email" placeholder="vous@exemple.com" />
+            </div>
+            <div class="form-group">
+              <label for="bk-motif">Motif <span class="req">*</span></label>
+              <select id="bk-motif" required>
+                <option value="">Choisir un motif</option>
+                <option value="Détartrage">Détartrage</option>
+                <option value="Blanchiment">Blanchiment</option>
+                <option value="Carie/Plombage">Carie / Plombage</option>
+                <option value="Extraction">Extraction</option>
+                <option value="Douleur/Urgence">Douleur / Urgence</option>
+                <option value="Autre">Autre</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="bk-date">Date <span class="req">*</span></label>
+              <input type="date" id="bk-date" required onchange="updateTimeSlots()" />
+            </div>
+            <div class="form-group">
+              <label for="bk-heure">Heure <span class="req">*</span></label>
+              <select id="bk-heure" required>
+                <option value="">Choisir une heure</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-error" id="bookingError"></div>
+          <button type="submit" class="btn btn-cta btn-full btn-lg" id="bookingSubmit">Confirmer mon rendez-vous →</button>
+        </form>
+      </div>
+
+      <!-- TICKET VIEW -->
+      <div id="ticketView" style="display:none">
+        <div class="ticket-card" id="ticketCard">
+          <div class="ticket-header">
+            <div class="ticket-logo">🦷 Saint Jean</div>
+            <div class="ticket-confirmed">
+              <span class="ticket-check">✓</span> Confirmé
+            </div>
+          </div>
+          <div class="ticket-body">
+            <p class="ticket-label">Votre numéro de ticket</p>
+            <h2 class="ticket-id" id="ticketId">SJ-0000-000</h2>
+            <div class="ticket-details">
+              <div class="ticket-row"><span>Patient</span><strong id="ticketNom">—</strong></div>
+              <div class="ticket-row"><span>Motif</span><strong id="ticketMotif">—</strong></div>
+              <div class="ticket-row"><span>Date</span><strong id="ticketDate">—</strong></div>
+              <div class="ticket-row"><span>Heure</span><strong id="ticketHeure">—</strong></div>
+              <div class="ticket-row"><span>Adresse</span><strong>Cocody, Abidjan</strong></div>
+            </div>
+            <div class="ticket-qr">
+              <img id="ticketQr" alt="QR Code du ticket" />
+            </div>
+            <p class="ticket-instruction">Présentez ce ticket à l'accueil du cabinet le jour de votre rendez-vous.</p>
+          </div>
+        </div>
+        <div class="ticket-actions">
+          <button class="btn btn-cta" onclick="downloadTicket()">Télécharger le ticket (PDF)</button>
+          <button class="btn btn-outline" onclick="resetBooking()">Nouveau rendez-vous</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>

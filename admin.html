@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Administration — Cabinet Dentaire Saint Jean</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="admin-body">
+  <div class="admin-login-card">
+    <div class="logo-icon">🦷</div>
+    <h1>Espace Administrateur</h1>
+    <p>Cabinet Dentaire Saint Jean — Cocody, Abidjan</p>
+    <form onsubmit="adminLogin(event)">
+      <div class="form-group">
+        <label for="adminPass">Code d'accès</label>
+        <input type="password" id="adminPass" required placeholder="••••••••••" autocomplete="off" autofocus />
+      </div>
+      <div class="form-error" id="adminError"></div>
+      <button type="submit" class="btn btn-cta btn-lg">Se connecter →</button>
+    </form>
+    <a href="index.html" class="admin-back">← Retour au site</a>
+  </div>
+
+  <script>
+    const ADMIN_CODE = 'Digitaldream';
+
+    function adminLogin(event) {
+      event.preventDefault();
+      const code = document.getElementById('adminPass').value.trim();
+      const error = document.getElementById('adminError');
+      if (code === ADMIN_CODE) {
+        sessionStorage.setItem('admin', 'true');
+        window.location.href = 'dashboard.html';
+      } else {
+        error.textContent = 'Code d\'accès incorrect.';
+        document.getElementById('adminPass').value = '';
+      }
+    }
+  </script>
+</body>
+</html>
