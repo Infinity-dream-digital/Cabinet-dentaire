@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Cabinet Dentaire Saint Jean — Cocody Abidjan</title>
+  <title>Cabinet Dentaire  —  Abidjan</title>
   <meta name="description" content="Cabinet dentaire moderne à Cocody, Abidjan. Détartrage, blanchiment, soins sans douleur. Prenez rendez-vous en ligne et recevez votre ticket de confirmation." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -18,7 +18,7 @@
     <div class="container header-inner">
       <a href="#hero" class="logo">
         <span class="logo-icon">🦷</span>
-        <span class="logo-text"><strong>Saint Jean</strong><small>Dentaire</small></span>
+        <span class="logo-text"><strong>Cabinet</strong><small>Dentaire</small></span>
       </a>
       <nav class="nav" id="nav">
         <a href="#services">Services</a>
@@ -27,7 +27,7 @@
         <a href="#avis">Avis</a>
         <a href="#faq">FAQ</a>
       </nav>
-      <button class="btn btn-cta" onclick="openBookingModal()">Prendre RDV</button>
+      <button class="btn btn-cta" onclick="window.location.href='rdv.html'">Prendre RDV</button>
       <button class="burger" id="burger" aria-label="Menu">☰</button>
     </div>
   </header>
@@ -36,8 +36,7 @@
   <section class="hero" id="hero">
     <div class="container hero-inner">
       <div class="hero-content">
-        <p class="hero-badge">🦷 Cabinet Dentaire Saint Jean · Cocody, Abidjan</p>
-        <h1>Retrouvez un sourire éclatant<br>et <span class="text-accent">sans douleur</span> à Cocody</h1>
+        <h1>Retrouvez un sourire éclatant<br>et <span class="text-accent">sans douleur</span> à Abidjan</h1>
         <p class="hero-sub">Soins dentaires modernes, technologie numérique de pointe et devis gratuit. Votre santé bucco-dentaire entre des mains expertes.</p>
         <div class="hero-actions">
           <button class="btn btn-cta btn-lg" onclick="openBookingModal()">Prendre rendez-vous →</button>
@@ -60,90 +59,218 @@
   </section>
 
   <!-- TRUST BAR -->
-  <section class="trust-bar">
-    <div class="container trust-inner">
-      <div class="trust-item"><span class="trust-icon">★★★★★</span><div><strong>4.8/5</strong><small>Google Reviews</small></div></div>
-      <div class="trust-item"><span class="trust-icon">👥</span><div><strong>5000+</strong><small>Patients traités</small></div></div>
-      <div class="trust-item"><span class="trust-icon">⚡</span><div><strong>Urgences</strong><small>7j/7 sur appel</small></div></div>
-      <div class="trust-item"><span class="trust-icon">🛡️</span><div><strong>Hygiène</strong><small>Normes internationales</small></div></div>
+ <section class="trust-bar">
+  <div class="container trust-inner">
+    
+    <!-- 4.8/5 Google Reviews -->
+    <div class="trust-item">
+      <span class="trust-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+        </svg>
+      </span>
+      <div>
+        <strong>4.8/5</strong>
+        <small>Google Reviews</small>
+      </div>
     </div>
-  </section>
+
+    <!-- 5000+ Patients traités -->
+    <div class="trust-item">
+      <span class="trust-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+          <circle cx="9" cy="7" r="4"></circle>
+          <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+          <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+        </svg>
+      </span>
+      <div>
+        <strong>5000+</strong>
+        <small>Patients traités</small>
+      </div>
+    </div>
+
+    <!-- Urgences 7j/7 -->
+    <div class="trust-item">
+      <span class="trust-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
+        </svg>
+      </span>
+      <div>
+        <strong>Urgences</strong>
+        <small>7j/7 sur appel</small>
+      </div>
+    </div>
+
+    <!-- Hygiène Normes internationales -->
+    <div class="trust-item">
+      <span class="trust-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+          <polyline points="9 12 11 14 15 10"></polyline>
+        </svg>
+      </span>
+      <div>
+        <strong>Hygiène</strong>
+        <small>Normes internationales</small>
+      </div>
+    </div>
+
+  </div>
+</section>
 
   <!-- SERVICES -->
   <section class="section section-alt" id="services">
-    <div class="container">
-      <div class="section-head">
-        <p class="eyebrow">Nos services</p>
-        <h2>Des soins complets<br>pour toute la famille</h2>
-        <p>Des tarifs transparents et accessibles. Devis gratuit sur demande.</p>
-      </div>
-      <div class="services-grid">
-        <div class="service-card">
-          <div class="service-icon">🦷</div>
-          <h3>Détartrage</h3>
-          <p>Nettoyage professionnel complet pour des dents saines et un sourire éclatant.</p>
-          <div class="service-price">20 000 F</div>
-        </div>
-        <div class="service-card">
-          <div class="service-icon">✨</div>
-          <h3>Blanchiment</h3>
-          <p>Retrouvez un sourire éclatant et blanc grâce à notre traitement professionnel.</p>
-          <div class="service-price">Sur devis</div>
-        </div>
-        <div class="service-card">
-          <div class="service-icon">🔧</div>
-          <h3>Carie / Plombage</h3>
-          <p>Traitement des caries et plombages sans douleur avec matériaux de qualité.</p>
-          <div class="service-price">15 000 F</div>
-        </div>
-        <div class="service-card">
-          <div class="service-icon">🦴</div>
-          <h3>Extraction</h3>
-          <p>Extraction dentaire en toute sécurité avec un suivi post-opératoire attentif.</p>
-          <div class="service-price">25 000 F</div>
-        </div>
-        <div class="service-card">
-          <div class="service-icon">🦿</div>
-          <h3>Prothèse</h3>
-          <p>Prothèses dentaires sur mesure, fixes ou amovibles, pour retrouver le confort.</p>
-          <div class="service-price">Sur devis</div>
-        </div>
-        <div class="service-card">
-          <div class="service-icon">🧒</div>
-          <h3>Pédiatrie</h3>
-          <p>Soins dentaires adaptés aux enfants dans un environnement bienveillant et rassurant.</p>
-          <div class="service-price">10 000 F</div>
-        </div>
-      </div>
+  <div class="dental-bg-pattern"></div>
+
+  <div class="container">
+    <div class="section-head">
+      <p class="eyebrow">Nos services</p>
+      <h2>Des soins complets<br>pour toute la famille</h2>
+      <p>Des tarifs transparents et accessibles. Devis gratuit sur demande.</p>
     </div>
-  </section>
+
+    <!-- Disposition verticale -->
+    <div class="services-vertical">
+      
+      <!-- Service 01 -->
+      <div class="service-card-v">
+        <div class="service-icon">
+          <span>01</span>
+        </div>
+        <div class="service-content">
+          <div class="service-header">
+            <h3>Détartrage</h3>
+            <span class="service-price">20 000 F</span>
+          </div>
+          <p>Nettoyage professionnel complet pour des dents saines, élimination de la plaque et un sourire éclatant.</p>
+        </div>
+      </div>
+
+      <!-- Service 02 -->
+      <div class="service-card-v">
+        <div class="service-icon">
+          <span>02</span>
+        </div>
+        <div class="service-content">
+          <div class="service-header">
+            <h3>Blanchiment</h3>
+            <span class="service-price">Sur devis</span>
+          </div>
+          <p>Retrouvez un sourire éclatant et blanc grâce à notre traitement professionnel haut de gamme et sécurisé.</p>
+        </div>
+      </div>
+
+      <!-- Service 03 -->
+      <div class="service-card-v">
+        <div class="service-icon">
+          <span>03</span>
+        </div>
+        <div class="service-content">
+          <div class="service-header">
+            <h3>Carie / Plombage</h3>
+            <span class="service-price">15 000 F</span>
+          </div>
+          <p>Traitement des caries et plombages sans douleur avec des matériaux de dernière génération hautement durables.</p>
+        </div>
+      </div>
+
+      <!-- Service 04 -->
+      <div class="service-card-v">
+        <div class="service-icon">
+          <span>04</span>
+        </div>
+        <div class="service-content">
+          <div class="service-header">
+            <h3>Extraction</h3>
+            <span class="service-price">25 000 F</span>
+          </div>
+          <p>Extraction dentaire douce en toute sécurité sous anesthésie locale avec un suivi post-opératoire attentif.</p>
+        </div>
+      </div>
+
+      <!-- Service 05 -->
+      <div class="service-card-v">
+        <div class="service-icon">
+          <span>05</span>
+        </div>
+        <div class="service-content">
+          <div class="service-header">
+            <h3>Prothèse</h3>
+            <span class="service-price">Sur devis</span>
+          </div>
+          <p>Prothèses dentaires esthétiques sur mesure, fixes ou amovibles, pour retrouver un confort de mastication optimal.</p>
+        </div>
+      </div>
+
+      <!-- Service 06 -->
+      <div class="service-card-v">
+        <div class="service-icon">
+          <span>06</span>
+        </div>
+        <div class="service-content">
+          <div class="service-header">
+            <h3>Pédiatrie</h3>
+            <span class="service-price">10 000 F</span>
+          </div>
+          <p>Soins dentaires adaptés aux enfants dans un environnement chaleureux, bienveillant et totalement rassurant.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
 
   <!-- POURQUOI NOUS -->
-  <section class="section" id="pourquoi">
-    <div class="container">
-      <div class="section-head">
-        <p class="eyebrow">Pourquoi nous choisir</p>
-        <h2>Une expérience dentaire<br>différente</h2>
-      </div>
-      <div class="features-grid">
-        <div class="feature-card">
-          <div class="feature-icon">🛡️</div>
+  <section class="section section-why" id="pourquoi">
+  <div class="container">
+    <div class="section-head text-center">
+      <p class="eyebrow">Pourquoi nous choisir</p>
+      <h2>Une expérience dentaire<br>radicalement différente</h2>
+    </div>
+
+    <div class="bento-grid">
+      <!-- Carte Vedette (Occupe 2 colonnes sur desktop) -->
+      <div class="bento-card bento-hero">
+        <div class="bento-badge">Priorité Absolue</div>
+        <div class="bento-icon-wrapper">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
+        </div>
+        <div class="bento-content">
           <h3>Hygiène irréprochable</h3>
-          <p>Stérilisation aux normes internationales, matériel à usage unique, locaux désinfectés entre chaque patient.</p>
+          <p>Stérilisation stricte aux normes internationales, matériel à usage unique scellé et désinfection complète des blocs entre chaque consultation.</p>
         </div>
-        <div class="feature-card">
-          <div class="feature-icon">📱</div>
-          <h3>Numérique sans douleur</h3>
-          <p>Radiographie numérique, empreintes 3D et techniques modernes pour des soins précis et indolores.</p>
+        <div class="bento-glow"></div>
+      </div>
+
+      <!-- Carte 2 : Technologie -->
+      <div class="bento-card">
+        <div class="bento-icon-wrapper">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
         </div>
-        <div class="feature-card">
-          <div class="feature-icon">💳</div>
-          <h3>Paiement flexible</h3>
-          <p>Espèces, Mobile Money, virement. Devis gratuit et transparent avant tout traitement.</p>
+        <div class="bento-content">
+          <h3>Numérique & Indolore</h3>
+          <p>Radiographie 3D instantanée, empreintes optiques et techniques modernes pour un confort total sans douleur.</p>
         </div>
+        <div class="bento-glow"></div>
+      </div>
+
+      <!-- Carte 3 : Paiement -->
+      <div class="bento-card">
+        <div class="bento-icon-wrapper">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+        </div>
+        <div class="bento-content">
+          <h3>Paiement sur mesure</h3>
+          <p>Espèces, Mobile Money (Orange, Wave, MTN), virement. Devis 100% gratuit et transparent avant tout soin.</p>
+        </div>
+        <div class="bento-glow"></div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
   <!-- MEDECIN -->
   <section class="section section-alt" id="medecin">
@@ -368,5 +495,52 @@
   </div>
 
   <script type="module" src="app.js"></script>
+  <script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const observerOptions = {
+      root: null,
+      threshold: 0.2 // Se déclenche quand 20% de la section est visible à l'écran
+    };
+
+    const observer = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          // Ajoute la classe .visible à chaque carte dès que la section apparaît
+          const items = entry.target.querySelectorAll('.trust-item');
+          items.forEach(item => item.classList.add('visible'));
+          
+          // Stoppe l'observation une fois l'animation jouée
+          observer.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+
+    const trustSection = document.querySelector('.trust-bar');
+    if (trustSection) {
+      observer.observe(trustSection);
+    }
+  });
+</script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const serviceCards = document.querySelectorAll('.service-card-v');
+
+    const observerOptions = {
+      root: null,
+      threshold: 0.15 // Déclenche quand 15% de la carte est visible
+    };
+
+    const serviceObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target); // Stoppe l'observation une fois affiché
+        }
+      });
+    }, observerOptions);
+
+    serviceCards.forEach(card => serviceObserver.observe(card));
+  });
+</script>
 </body>
 </html>

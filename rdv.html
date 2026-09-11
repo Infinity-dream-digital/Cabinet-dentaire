@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prendre Rendez-vous | Cabinet Dentaire</title>
+  <style>
+    :root {
+      --primary: #0284c7;
+      --primary-dark: #0369a1;
+      --accent: #10b981;
+      --bg: #f8fafc;
+      --text: #1e293b;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      overflow-x: hidden;
+    }
+
+    .rdv-container {
+      max-width: 900px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+    }
+
+    /* SCÈNE DE L'ANIMATION */
+    .stage {
+      width: 100%;
+      max-width: 550px;
+      height: 180px;
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      overflow: hidden;
+    }
+
+    /* LE MÉDECIN VIRTUEL (Marchant) */
+    .doctor-walker {
+      position: absolute;
+      left: -120px; /* Départ hors écran à gauche */
+      bottom: 10px;
+      width: 100px;
+      height: 140px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      z-index: 10;
+      transition: transform 0.1s ease;
+    }
+
+    /* Animation de marche (dandinement/pas) */
+    .doctor-walker.walking {
+      animation: walkAcross 3s cubic-bezier(0.4, 0, 0.2, 1) forwards, 
+                 bobbing 0.3s ease-in-out infinite alternate;
+    }
+
+    /* Animation d'action (appui sur le bouton) */
+    .doctor-walker.pushing {
+      transform: scale(0.95) translateY(8px);
+    }
+
+    .doctor-svg {
+      width: 90px;
+      height: 110px;
+    }
+
+    /* BOÎTE / BOUTON DECLENCHEUR */
+    .trigger-box {
+      background: var(--primary);
+      color: white;
+      padding: 14px 28px;
+      border-radius: 30px;
+      font-weight: 700;
+      font-size: 15px;
+      box-shadow: 0 10px 25px rgba(2, 132, 199, 0.25);
+      z-index: 5;
+      margin-bottom: 20px;
+      transition: transform 0.2s ease, background 0.3s ease;
+      position: relative;
+    }
+
+    .trigger-box.pressed {
+      transform: scale(0.92);
+      background: var(--accent);
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+    }
+
+    /* FORMULAIRE DENTAIRE */
+    .form-wrapper {
+      width: 100%;
+      max-width: 550px;
+      background: #ffffff;
+      border-radius: 20px;
+      padding: 0 32px;
+      max-height: 0;
+      opacity: 0;
+      overflow: hidden;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+      border: 1px solid #e2e8f0;
+      transition: max-height 0.8s cubic-bezier(0.16, 1, 0.3, 1), 
+                  opacity 0.6s ease, 
+                  padding 0.6s ease;
+    }
+
+    .form-wrapper.active {
+      max-height: 800px;
+      opacity: 1;
+      padding: 32px;
+    }
+
+    /* STYLE FORMULAIRE */
+    .form-title { text-align: center; color: var(--primary); font-size: 22px; margin-bottom: 20px; }
+    .form-group { margin-bottom: 18px; }
+    .form-group label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 6px; color: #475569; }
+    .form-group input, .form-group select, .form-group textarea {
+      width: 100%; padding: 12px 14px; border: 1px solid #cbd5e1; border-radius: 10px; font-size: 14px; outline: none; transition: border-color 0.3s ease;
+    }
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+      border-color: var(--primary); box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.15);
+    }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .submit-btn {
+      width: 100%; background: var(--accent); color: white; border: none; padding: 14px; border-radius: 10px; font-size: 16px; font-weight: 700; cursor: pointer; transition: background 0.3s ease; margin-top: 10px;
+    }
+    .submit-btn:hover { background: #059669; }
+
+    /* KEYFRAMES ANIMATION DE MARCHE */
+    @keyframes walkAcross {
+      0% { left: -100px; }
+      100% { left: calc(50% - 110px); } /* S'arrête pile devant le bouton */
+    }
+
+    @keyframes bobbing {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-6px); } /* Effet de pas */
+    }
+
+    @media (max-width: 480px) {
+      .form-row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="rdv-container">
+    
+    <!-- Scène d'animation -->
+    <div class="stage">
+      <!-- Médecin qui marche -->
+      <div class="doctor-walker" id="doctor">
+        <svg class="doctor-svg" viewBox="0 0 100 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Tête & Cheveux -->
+          <path d="M30 38C30 22 40 15 50 15C60 15 70 22 70 38V48C70 58 61 66 50 66C39 66 30 58 30 48V38Z" fill="#ffdbac"/>
+          <path d="M28 35C28 22 38 13 50 13C62 13 72 22 72 35C72 28 64 18 50 18C36 18 28 28 28 35Z" fill="#2d3748"/>
+          <circle cx="42" cy="38" r="3" fill="#2d3748"/>
+          <circle cx="58" cy="38" r="3" fill="#2d3748"/>
+          
+          <!-- Cache-nez médical -->
+          <rect x="34" y="44" width="32" height="18" rx="4" fill="#ffffff" stroke="#0284c7" stroke-width="2"/>
+          <line x1="34" y1="50" x2="66" y2="50" stroke="#cbd5e1" stroke-width="1"/>
+          
+          <!-- Blouse & Bras tendu -->
+          <path d="M25 85C25 72 36 68 50 68C64 68 75 72 75 85V110H25V85Z" fill="#0284c7"/>
+          <path d="M42 68L50 80L58 68" stroke="#ffffff" stroke-width="3" fill="none"/>
+          
+          <!-- Main/Bras prêt à pousser -->
+          <circle cx="78" cy="72" r="6" fill="#ffdbac"/>
+          <path d="M68 75 L78 72" stroke="#0284c7" stroke-width="8" stroke-linecap="round"/>
+        </svg>
+      </div>
+
+      <!-- Bouton central -->
+      <div class="trigger-box" id="triggerBox">
+        <span>Arrivée du médecin...</span>
+      </div>
+    </div>
+
+    <!-- Formulaire -->
+    <div class="form-wrapper" id="formWrapper">
+      <h2 class="form-title">🦷 Prise de Rendez-vous</h2>
+      <form id="rdvForm">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="fullname">Nom & Prénom</label>
+            <input type="text" id="fullname" required placeholder="Ex: Jean Dupont">
+          </div>
+          <div class="form-group">
+            <label for="phone">Numéro WhatsApp / Téléphone</label>
+            <input type="tel" id="phone" required placeholder="Ex: 07 00 00 00 00">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="service">Service Souhaité</label>
+            <select id="service" required>
+              <option value="">-- Choisissez un soin --</option>
+              <option value="detartrage">Détartrage (20 000 F)</option>
+              <option value="blanchiment">Blanchiment (Sur devis)</option>
+              <option value="carie">Carie / Plombage (15 000 F)</option>
+              <option value="extraction">Extraction (25 000 F)</option>
+              <option value="prothese">Prothèse (Sur devis)</option>
+              <option value="pediatrie">Pédiatrie (10 000 F)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="date">Date souhaitée</label>
+            <input type="date" id="date" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="notes">Précisions ou symptômes (Optionnel)</label>
+          <textarea id="notes" rows="3" placeholder="Décrivez brièvement votre besoin..."></textarea>
+        </div>
+
+        <button type="submit" class="submit-btn">Confirmer mon Rendez-vous</button>
+      </form>
+    </div>
+
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const doctor = document.getElementById('doctor');
+      const triggerBox = document.getElementById('triggerBox');
+      const formWrapper = document.getElementById('formWrapper');
+
+      // 1. Déclencher la marche dès le chargement de la page
+      setTimeout(() => {
+        doctor.classList.add('walking');
+      }, 300);
+
+      // 2. Une fois la marche terminée (après 3s) : le médecin appuie sur le bouton
+      setTimeout(() => {
+        // Arrête le dandinement
+        doctor.style.animation = 'none';
+        doctor.style.left = 'calc(50% - 110px)';
+
+        // Animation d'appui du médecin
+        doctor.classList.add('pushing');
+        triggerBox.classList.add('pressed');
+
+        // 3. Révélation du formulaire
+        setTimeout(() => {
+          doctor.classList.remove('pushing');
+          triggerBox.querySelector('span').innerText = '✅ Formulaire Ouvert';
+          formWrapper.classList.add('active');
+        }, 300);
+
+      }, 3300);
+    });
+  </script>
+</body>
+</html>

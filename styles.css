@@ -54,6 +54,7 @@ body {
 }
 .btn-cta:hover {
   background: var(--accent-dark);
+  letter-spacing: 1px;
   transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(46, 196, 182, 0.35);
 }
@@ -100,16 +101,65 @@ body {
   display: flex;
   gap: 32px;
 }
+
 .nav a {
   color: var(--text);
   text-decoration: none;
   font-size: 14px;
   font-weight: 500;
   transition: color var(--transition);
+  
+  position: relative;
+  padding: 6px 0;
+  display: inline-block;
+  overflow: hidden;
 }
-.nav a:hover { color: var(--primary); }
-.burger { display: none; background: none; border: none; font-size: 24px; cursor: pointer; color: var(--text); }
 
+/* Couleurs médicales */
+:root {
+  --green-medical: #10b981; /* Vert médical */
+  --blue-medical: #0284c7;  /* Bleu médical */
+}
+
+/* Pseudo-éléments pour les deux barres */
+.nav a::before,
+.nav a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 2px;
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* BARRE DU HAUT : Vert médical (de droite vers la gauche) */
+.nav a::before {
+  top: 0;
+  background-color: var(--green-medical);
+  transform: translateX(101%);
+}
+
+/* BARRE DU BAS : Bleu médical (de gauche vers la droite) */
+.nav a::after {
+  bottom: 0;
+  background-color: var(--blue-medical);
+  transform: translateX(-101%);
+}
+
+/* ANIMATION DES BARRES AU SURVOL (Le texte garde sa couleur d'origine) */
+.nav a:hover::before,
+.nav a:hover::after {
+  transform: translateX(0);
+}
+
+.burger { 
+  display: none; 
+  background: none; 
+  border: none; 
+  font-size: 24px; 
+  cursor: pointer; 
+  color: var(--text); 
+}
 /* HERO */
 .hero { padding: 60px 0 80px; background: linear-gradient(135deg, var(--white) 0%, var(--primary-light) 100%); }
 .hero-inner { display: flex; align-items: center; gap: 60px; }
@@ -176,17 +226,92 @@ body {
 .hero-card span { font-size: 12px; color: var(--text-muted); }
 
 /* TRUST BAR */
-.trust-bar { background: var(--primary); padding: 28px 0; }
-.trust-inner { display: flex; justify-content: space-around; flex-wrap: wrap; gap: 20px; }
-.trust-item { display: flex; align-items: center; gap: 12px; color: var(--white); }
-.trust-icon { font-size: 22px; }
+.trust-bar { 
+  background: var(--primary); 
+  padding: 28px 0; 
+  overflow: hidden;
+}
+
+.trust-inner { 
+  display: flex; 
+  justify-content: space-around; 
+  flex-wrap: wrap; 
+  gap: 20px; 
+}
+
+.trust-item { 
+  display: flex; 
+  align-items: center; 
+  gap: 12px; 
+  color: var(--white); 
+  
+  /* État initial : masqué et décalé vers le bas */
+  opacity: 0;
+  transform: translateY(30px) scale(0.95);
+  
+  /* Transition fluide quand la classe .visible est ajoutée */
+  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), 
+              transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* État animé une fois visible à l'écran */
+.trust-item.visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* Délais d'apparition en cascade */
+.trust-item:nth-child(1).visible { transition-delay: 0.1s; }
+.trust-item:nth-child(2).visible { transition-delay: 0.35s; }
+.trust-item:nth-child(3).visible { transition-delay: 0.50s; }
+.trust-item:nth-child(4).visible { transition-delay: 0.60s; }
+
+/* Animation au survol (Hover) */
+.trust-item:hover {
+  transform: translateY(-4px) scale(1.05) !important;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.15));
+}
+
+.trust-icon { 
+  font-size: 22px; 
+  display: inline-block;
+  transition: transform 0.3s ease;
+}
+
+.trust-item:hover .trust-icon {
+  transform: scale(1.2) rotate(5deg);
+}
+
 .trust-item strong { display: block; font-size: 16px; }
 .trust-item small { font-size: 12px; opacity: 0.8; }
 
 /* SECTIONS */
 .section { padding: 80px 0; }
-.section-alt { background: var(--bg-alt); }
-.section-head { text-align: center; max-width: 600px; margin: 0 auto 50px; }
+/* SECTION ET MOTIF DENTAIRE DE FOND */
+#services {
+  position: relative;
+  overflow: hidden;
+
+  /* Espacement en haut et en bas */
+  padding-top: 80px;
+  padding-bottom: 80px;
+}
+
+.dental-bg-pattern {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  pointer-events: none;
+  opacity: 0.04; /* Filigrane très doux */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1'%3E%3Cpath d='M12 2C8.5 2 6 4.5 6 8c0 3 1.5 6.5 2.5 10 .5 1.5 1 3.5 2 3.5s1.5-1.5 1.5-3c0-1.5 0-1.5 1-1.5s1 0 1 1.5c0 1.5.5 3 1.5 3s1.5-2 2-3.5c1-3.5 2.5-7 2.5-10 0-3.5-2.5-6-6-6z'/%3E%3C/svg%3E");
+  background-size: 100px 100px;
+  z-index: 0;
+}
+
+#services .container {
+  position: relative;
+  z-index: 1;
+}
+
 .eyebrow {
   color: var(--accent-dark);
   font-size: 13px;
@@ -195,70 +320,269 @@ body {
   letter-spacing: 0.1em;
   margin-bottom: 12px;
 }
+
 .section-head h2 {
   font-size: clamp(26px, 4vw, 38px);
   font-weight: 700;
   color: var(--primary);
   line-height: 1.2;
   margin-bottom: 16px;
+  text-align: center;
 }
-.section-head p { color: var(--text-muted); font-size: 16px; }
 
-/* SERVICES */
-.services-grid {
+.section-head p { color: var(--text-muted); font-size: 16px; text-align: center; max-width: 600px; margin: 0 auto; }
+
+/* CONTENEUR VERTICAL */
+.services-vertical {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 800px;
+  margin: 40px auto 0 auto;
+}
+
+/* CARTE SERVICE VERTICALE */
+.service-card-v {
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  padding: 24px 28px;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 24px;
+
+  /* État masqué avant le scroll */
+  opacity: 0;
+  transform: translateY(35px);
+  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+/* Apparition au scroll via JS */
+.service-card-v.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.service-card-v:hover {
+  transform: translateY(-4px) !important;
+  box-shadow: var(--shadow-lg);
+  border-color: var(--accent);
+}
+
+/* ICONES */
+/* STYLE DES NUMÉROS */
+.service-icon {
+  width: 56px;
+  height: 56px;
+  min-width: 56px;
+  background: var(--primary-light);
+  border-radius: var(--radius);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.service-icon span {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--primary);
+  letter-spacing: -0.5px;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+/* Effet interactif au survol (Hover) */
+.service-card-v:hover .service-icon {
+  background-color: var(--primary);
+  transform: scale(1.08);
+}
+
+.service-card-v:hover .service-icon span {
+  color: var(--white);
+}
+
+/* CONTENU */
+.service-content {
+  flex: 1;
+}
+
+.service-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.service-card-v h3 {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--text);
+  margin: 0;
+}
+
+.service-price {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--accent-dark);
+  background: rgba(16, 185, 129, 0.08);
+  padding: 4px 12px;
+  border-radius: 20px;
+}
+
+.service-card-v p {
+  color: var(--text-muted);
+  font-size: 14px;
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* RESPONSIVE SMARTPHONE */
+@media (max-width: 600px) {
+  .service-card-v {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+  .service-header {
+    width: 100%;
+  }
+}
+
+
+/* FEATURES */
+.section-why {
+  padding: 90px 0;
+  background: radial-gradient(circle at 50% 0%, rgba(16, 185, 129, 0.05) 0%, transparent 70%);
+}
+
+.text-center {
+  text-align: center;
+  max-width: 600px;
+  margin: 0 auto 48px auto;
+}
+
+/* GRILLE BENTO ASYMÉTRIQUE */
+.bento-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 24px;
 }
-.service-card {
+
+/* CARTE DE BASE */
+.bento-card {
+  position: relative;
   background: var(--white);
-  border-radius: var(--radius-lg);
-  padding: 36px 28px;
-  box-shadow: var(--shadow);
-  transition: all var(--transition);
   border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), 
+              border-color 0.4s ease, 
+              box-shadow 0.4s ease;
 }
-.service-card:hover {
-  transform: translateY(-6px);
-  box-shadow: var(--shadow-lg);
-  border-color: var(--accent);
+
+/* CARTE VEDETTE (Taille doublée) */
+.bento-hero {
+  grid-column: span 2;
+  background: linear-gradient(135deg, #ffffff 0%, #f4fbf7 100%);
+  border-color: rgba(16, 185, 129, 0.3);
 }
-.service-icon {
-  width: 56px; height: 56px;
-  background: var(--primary-light);
-  border-radius: var(--radius);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 28px;
-  margin-bottom: 20px;
-}
-.service-card h3 { font-size: 20px; font-weight: 600; color: var(--text); margin-bottom: 10px; }
-.service-card p { color: var(--text-muted); font-size: 14px; margin-bottom: 16px; }
-.service-price {
-  font-size: 18px;
+
+.bento-badge {
+  align-self: flex-start;
+  background: rgba(16, 185, 129, 0.12);
+  color: var(--accent-dark, #059669);
+  font-size: 11px;
   font-weight: 700;
-  color: var(--accent-dark);
-  padding-top: 14px;
-  border-top: 1px solid var(--border);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 6px 14px;
+  border-radius: 100px;
+  margin-bottom: 24px;
 }
 
-/* FEATURES */
-.features-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 32px;
+/* ICONES ET CONTENU */
+.bento-icon-wrapper {
+  width: 52px;
+  height: 52px;
+  background: var(--primary-light, #e0f2fe);
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  transition: transform 0.3s ease, background-color 0.3s ease;
 }
-.feature-card { text-align: center; padding: 20px; }
-.feature-icon {
-  width: 72px; height: 72px;
-  background: var(--accent-light);
-  border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 32px;
-  margin: 0 auto 20px;
-}
-.feature-card h3 { font-size: 20px; font-weight: 600; color: var(--text); margin-bottom: 10px; }
-.feature-card p { color: var(--text-muted); font-size: 15px; }
 
+.bento-icon-wrapper svg {
+  width: 26px;
+  height: 26px;
+  stroke: var(--primary, #0284c7);
+  transition: stroke 0.3s ease;
+}
+
+.bento-content h3 {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 10px;
+}
+
+.bento-content p {
+  color: var(--text-muted);
+  font-size: 14px;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* EFFET INTERACTIF DE LUMIÈRE (GLOW) */
+.bento-glow {
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle at center, rgba(2, 132, 199, 0.08) 0%, transparent 50%);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s ease;
+}
+
+.bento-card:hover {
+  transform: translateY(-6px);
+  border-color: var(--primary);
+  box-shadow: 0 20px 30px -10px rgba(0, 0, 0, 0.07);
+}
+
+.bento-card:hover .bento-glow {
+  opacity: 1;
+}
+
+.bento-card:hover .bento-icon-wrapper {
+  background: var(--primary);
+  transform: scale(1.1) rotate(-3deg);
+}
+
+.bento-card:hover .bento-icon-wrapper svg {
+  stroke: var(--white);
+}
+
+/* RESPONSIVE SMARTPHONE & TABLETTE */
+@media (max-width: 900px) {
+  .bento-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .bento-hero {
+    grid-column: span 1;
+  }
+}
 /* MEDECIN */
 .medecin-inner { display: flex; align-items: center; gap: 50px; }
 .medecin-image { flex: 1; }
